@@ -1,0 +1,2267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI in Space Exploration and Technology</title>
+    <style>
+        /* ===== CSS RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --deep-space: #0a0e27;
+            --navy: #0d1b3e;
+            --cosmic-blue: #1a237e;
+            --electric-blue: #00b4d8;
+            --neon-cyan: #00f5ff;
+            --purple: #7c3aed;
+            --violet: #a855f7;
+            --orange: #f97316;
+            --gold: #fbbf24;
+            --green: #10b981;
+            --red: #ef4444;
+            --white: #ffffff;
+            --light-gray: #e2e8f0;
+            --text-gray: #94a3b8;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--deep-space);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        /* ===== STARS BACKGROUND ===== */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+            z-index: 1000;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: 0 4px 30px rgba(0, 180, 216, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-logo .logo-icon {
+            font-size: 32px;
+            animation: rocketFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes rocketFloat {
+            0%, 100% { transform: translateY(0) rotate(-10deg); }
+            50% { transform: translateY(-5px) rotate(-10deg); }
+        }
+
+        .nav-logo .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--neon-cyan);
+            background: rgba(0, 245, 255, 0.1);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--neon-cyan);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 40px 80px;
+            overflow: hidden;
+        }
+
+        .hero-bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(0, 180, 216, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(249, 115, 22, 0.1) 0%, transparent 40%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            color: var(--neon-cyan);
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-badge .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 10px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--electric-blue), var(--violet), var(--orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 300% 300%;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            color: var(--text-gray);
+            margin-bottom: 15px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-tagline {
+            font-size: 18px;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease 0.3s both;
+            letter-spacing: 2px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.4s both;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--electric-blue), var(--purple));
+            color: var(--white);
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 25px rgba(0, 180, 216, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(0, 180, 216, 0.5);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: var(--white);
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--neon-cyan);
+            background: rgba(0, 245, 255, 0.05);
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 60px;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--neon-cyan);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* ===== SECTION COMMON ===== */
+        section {
+            position: relative;
+            z-index: 2;
+            padding: 100px 40px;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--neon-cyan);
+            margin-bottom: 15px;
+            padding: 6px 16px;
+            background: rgba(0, 245, 255, 0.08);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 245, 255, 0.15);
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        #about {
+            background: linear-gradient(180deg, transparent, rgba(13, 27, 62, 0.5), transparent);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+
+        .about-content h2 span {
+            color: var(--neon-cyan);
+        }
+
+        .about-content p {
+            font-size: 17px;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .about-features {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .about-feature:hover {
+            background: rgba(0, 245, 255, 0.05);
+            border-color: rgba(0, 245, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .about-feature .feature-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .about-feature .feature-text {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .about-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .planet-system {
+            position: relative;
+            width: 400px;
+            height: 400px;
+        }
+
+        .central-planet {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--electric-blue), var(--purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            box-shadow: 0 0 60px rgba(0, 180, 216, 0.4), 0 0 120px rgba(124, 58, 237, 0.2);
+            animation: planetPulse 4s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes planetPulse {
+            0%, 100% { box-shadow: 0 0 60px rgba(0, 180, 216, 0.4), 0 0 120px rgba(124, 58, 237, 0.2); }
+            50% { box-shadow: 0 0 80px rgba(0, 180, 216, 0.6), 0 0 160px rgba(124, 58, 237, 0.3); }
+        }
+
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            animation: rotate var(--speed) linear infinite;
+        }
+
+        .orbit-1 {
+            width: 220px;
+            height: 220px;
+            margin: -110px 0 0 -110px;
+            --speed: 8s;
+        }
+
+        .orbit-2 {
+            width: 300px;
+            height: 300px;
+            margin: -150px 0 0 -150px;
+            --speed: 12s;
+        }
+
+        .orbit-3 {
+            width: 380px;
+            height: 380px;
+            margin: -190px 0 0 -190px;
+            --speed: 16s;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .orbit-dot {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            animation: counterRotate var(--speed) linear infinite;
+        }
+
+        .orbit-1 .orbit-dot {
+            top: -20px;
+            left: 50%;
+            margin-left: -20px;
+            --speed: 8s;
+        }
+
+        .orbit-2 .orbit-dot {
+            top: 50%;
+            right: -20px;
+            margin-top: -20px;
+            --speed: 12s;
+        }
+
+        .orbit-3 .orbit-dot {
+            bottom: -20px;
+            left: 50%;
+            margin-left: -20px;
+            --speed: 16s;
+        }
+
+        @keyframes counterRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+        }
+
+        /* ===== EXPLORATION ROVERS SECTION ===== */
+        #rovers {
+            background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.05), transparent);
+        }
+
+        .rovers-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .rover-info h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--violet);
+        }
+
+        .rover-info p {
+            font-size: 16px;
+            color: var(--text-gray);
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .capability-list {
+            list-style: none;
+            margin-top: 25px;
+        }
+
+        .capability-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 15px;
+            color: var(--light-gray);
+        }
+
+        .capability-list li .check {
+            color: var(--green);
+            font-size: 18px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .rover-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .rover-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(168, 85, 247, 0.05));
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            cursor: default;
+        }
+
+        .rover-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124, 58, 237, 0.4);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
+        }
+
+        .rover-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .rover-card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--purple), var(--violet));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .rover-card h4 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .rover-card p {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        /* ===== SATELLITE TECHNOLOGY SECTION ===== */
+        #satellite {
+            background: linear-gradient(180deg, transparent, rgba(0, 180, 216, 0.05), transparent);
+        }
+
+        .satellite-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .satellite-card {
+            background: linear-gradient(135deg, rgba(0, 180, 216, 0.08), rgba(0, 245, 255, 0.03));
+            border: 1px solid rgba(0, 180, 216, 0.15);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .satellite-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--electric-blue), var(--neon-cyan));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .satellite-card:hover::before {
+            opacity: 1;
+        }
+
+        .satellite-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 180, 216, 0.3);
+            box-shadow: 0 15px 50px rgba(0, 180, 216, 0.1);
+        }
+
+        .satellite-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--electric-blue), var(--neon-cyan));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 25px;
+            box-shadow: 0 8px 30px rgba(0, 180, 216, 0.3);
+        }
+
+        .satellite-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--neon-cyan);
+        }
+
+        .satellite-card p {
+            font-size: 15px;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        .satellite-card .stat-highlight {
+            display: inline-block;
+            background: rgba(0, 245, 255, 0.1);
+            color: var(--neon-cyan);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        /* ===== MISSION CONTROL SECTION ===== */
+        #mission {
+            background: linear-gradient(180deg, transparent, rgba(16, 185, 129, 0.05), transparent);
+        }
+
+        .mission-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .mission-dashboard {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.02));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .dashboard-header h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--green);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .dashboard-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .metric-value.cyan { color: var(--neon-cyan); }
+        .metric-value.green { color: var(--green); }
+        .metric-value.orange { color: var(--orange); }
+        .metric-value.purple { color: var(--violet); }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mission-info h3 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--green);
+        }
+
+        .mission-info p {
+            font-size: 16px;
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .mission-capabilities {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .mission-cap-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mission-cap-item:hover {
+            background: rgba(16, 185, 129, 0.1);
+            transform: translateX(5px);
+        }
+
+        .mission-cap-item .cap-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .mission-cap-item .cap-text h5 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .mission-cap-item .cap-text p {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin: 0;
+        }
+
+        /* ===== FUTURE EXPLORATION SECTION ===== */
+        #future {
+            background: linear-gradient(180deg, transparent, rgba(249, 115, 22, 0.05), transparent);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--electric-blue), var(--purple), var(--orange));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            justify-content: flex-start;
+            padding-right: calc(50% + 40px);
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-end;
+            padding-left: calc(50% + 40px);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background: var(--deep-space);
+            border: 3px solid var(--neon-cyan);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .timeline-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            max-width: 380px;
+        }
+
+        .timeline-card:hover {
+            border-color: rgba(0, 245, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-year {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--electric-blue), var(--purple));
+            color: var(--white);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .timeline-card h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--orange);
+        }
+
+        .timeline-card p {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        /* ===== TECHNOLOGIES SECTION ===== */
+        #technologies {
+            background: linear-gradient(180deg, transparent, rgba(26, 35, 126, 0.2), transparent);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .tech-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .tech-card:hover::after {
+            opacity: 1;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 245, 255, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .tech-emoji {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .tech-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--neon-cyan);
+        }
+
+        .tech-card p {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== KEY MISSIONS SECTION ===== */
+        #missions {
+            background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.05), transparent);
+        }
+
+        .missions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .mission-card {
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 35px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission-card .card-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 24px 24px 0 0;
+            transition: height 0.3s ease;
+        }
+
+        .mission-card:nth-child(1) .card-glow { background: linear-gradient(90deg, var(--electric-blue), var(--neon-cyan)); }
+        .mission-card:nth-child(2) .card-glow { background: linear-gradient(90deg, var(--purple), var(--violet)); }
+        .mission-card:nth-child(3) .card-glow { background: linear-gradient(90deg, var(--orange), var(--gold)); }
+        .mission-card:nth-child(4) .card-glow { background: linear-gradient(90deg, var(--green), var(--neon-cyan)); }
+        .mission-card:nth-child(5) .card-glow { background: linear-gradient(90deg, var(--red), var(--orange)); }
+        .mission-card:nth-child(6) .card-glow { background: linear-gradient(90deg, var(--violet), var(--electric-blue)); }
+
+        .mission-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .mission-card:hover .card-glow {
+            height: 4px;
+        }
+
+        .mission-card .mission-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .mission-card h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .mission-card .mission-org {
+            font-size: 13px;
+            color: var(--neon-cyan);
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mission-card p {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        /* ===== CHALLENGES SECTION ===== */
+        #challenges {
+            background: linear-gradient(180deg, transparent, rgba(239, 68, 68, 0.03), transparent);
+        }
+
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .challenge-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 35px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+
+        .challenge-card:hover {
+            border-color: rgba(239, 68, 68, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .challenge-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--red), var(--orange));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .challenge-info h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .challenge-info p {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        /* ===== QUOTE SECTION ===== */
+        .quote-section {
+            background: linear-gradient(135deg, rgba(0, 180, 216, 0.08), rgba(124, 58, 237, 0.08));
+            border-top: 1px solid rgba(0, 245, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+            padding: 80px 40px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .quote-text {
+            font-size: 36px;
+            font-weight: 700;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            line-height: 1.4;
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .quote-author {
+            font-size: 16px;
+            color: var(--text-gray);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 60px 40px 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand .footer-logo span:first-child {
+            font-size: 28px;
+        }
+
+        .footer-brand .footer-logo span:last-child {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.7;
+            max-width: 300px;
+        }
+
+        .footer-section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--neon-cyan);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .footer-bottom .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(0, 245, 255, 0.1);
+            border-color: var(--neon-cyan);
+            transform: translateY(-3px);
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--electric-blue), var(--purple));
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 180, 216, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .scroll-top.show {
+            display: flex;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 180, 216, 0.5);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 52px; }
+            .tech-grid { grid-template-columns: repeat(2, 1fr); }
+            .missions-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+            .satellite-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(10, 14, 39, 0.98);
+                padding: 20px;
+                border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero h1 { font-size: 36px; }
+            .hero-subtitle { font-size: 18px; }
+            .hero-stats { flex-direction: column; gap: 25px; }
+            .section-title { font-size: 32px; }
+
+            .about-grid,
+            .rovers-content,
+            .mission-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .satellite-grid,
+            .tech-grid,
+            .missions-grid,
+            .challenges-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before { left: 20px; }
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                padding-left: 60px;
+                padding-right: 0;
+                justify-content: flex-start;
+            }
+            .timeline-dot {
+                left: 20px;
+            }
+            .timeline-card {
+                max-width: 100%;
+            }
+
+            .planet-system {
+                width: 280px;
+                height: 280px;
+            }
+
+            .central-planet {
+                width: 80px;
+                height: 80px;
+                font-size: 35px;
+            }
+
+            .orbit-1 { width: 160px; height: 160px; margin: -80px 0 0 -80px; }
+            .orbit-2 { width: 220px; height: 220px; margin: -110px 0 0 -110px; }
+            .orbit-3 { width: 270px; height: 270px; margin: -135px 0 0 -135px; }
+
+            .footer-content { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+
+            section { padding: 60px 20px; }
+            .nav-container { padding: 12px 20px; }
+
+            .hero-buttons { flex-direction: column; align-items: center; }
+
+            .quote-text { font-size: 24px; }
+
+            .about-visual { order: -1; }
+
+            .dashboard-metrics { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 28px; }
+            .stat-number { font-size: 28px; }
+            .hero-stats { gap: 20px; }
+            .hero { padding: 100px 20px 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STARS BACKGROUND -->
+    <div class="stars" id="stars"></div>
+
+    <!-- NAVIGATION -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">🚀</span>
+                <span class="logo-text">AI SPACE EXPLORER</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#rovers">Rovers</a></li>
+                <li><a href="#satellite">Satellites</a></li>
+                <li><a href="#mission">Mission Control</a></li>
+                <li><a href="#future">Future</a></li>
+                <li><a href="#technologies">Technologies</a></li>
+                <li><a href="#missions">Missions</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-bg-animation"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse-dot"></span>
+                Exploring the Cosmos with Intelligence
+            </div>
+            <h1>
+                <span class="gradient-text">AI in Space</span><br>
+                Exploration & Technology
+            </h1>
+            <p class="hero-subtitle">
+                Discover how Artificial Intelligence is revolutionizing space exploration — from autonomous rovers on Mars to intelligent satellite networks orbiting Earth.
+            </p>
+            <p class="hero-tagline">
+                Smarter Systems • Deeper Discoveries • A Brighter Future
+            </p>
+            <div class="hero-buttons">
+                <a href="#about" class="btn-primary">
+                    🔭 Start Exploring
+                </a>
+                <a href="#technologies" class="btn-secondary">
+                    ⚡ View Technologies
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="counter1">200+</div>
+                    <div class="stat-label">AI Space Missions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Space Agencies Using AI</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">AI Satellites Active</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+        <div class="section-container">
+            <div class="about-grid">
+                <div class="about-content fade-in">
+                    <div class="section-label">About AI in Space</div>
+                    <h2>Where <span>Artificial Intelligence</span> Meets the Cosmos</h2>
+                    <p>
+                        Artificial Intelligence has become an indispensable tool in modern space exploration. From the moment a mission is planned to when data is analyzed years after collection, AI plays a crucial role at every step.
+                    </p>
+                    <p>
+                        Space agencies like NASA, ESA, ISRO, and SpaceX are leveraging machine learning, computer vision, natural language processing, and robotics to push the boundaries of what's possible in the vast expanse of space.
+                    </p>
+                    <p>
+                        AI systems can process millions of data points in seconds, identify patterns invisible to human eyes, autonomously navigate harsh terrain on distant planets, and predict equipment failures before they happen — making space exploration safer, faster, and more efficient than ever before.
+                    </p>
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <span class="feature-icon">🤖</span>
+                            <span class="feature-text">Autonomous Decision Making in Deep Space</span>
+                        </div>
+                        <div class="about-feature">
+                            <span class="feature-icon">📊</span>
+                            <span class="feature-text">Processing Petabytes of Space Data</span>
+                        </div>
+                        <div class="about-feature">
+                            <span class="feature-icon">🛡️</span>
+                            <span class="feature-text">Predictive Safety & Risk Assessment</span>
+                        </div>
+                        <div class="about-feature">
+                            <span class="feature-icon">🌍</span>
+                            <span class="feature-text">Earth Observation & Climate Monitoring</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual fade-in">
+                    <div class="planet-system">
+                        <div class="central-planet">🌎</div>
+                        <div class="orbit orbit-1">
+                            <div class="orbit-dot">🛰️</div>
+                        </div>
+                        <div class="orbit orbit-2">
+                            <div class="orbit-dot">🚀</div>
+                        </div>
+                        <div class="orbit orbit-3">
+                            <div class="orbit-dot">🌙</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPLORATION ROVERS SECTION -->
+    <section id="rovers">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-label">Exploration Rovers</div>
+                <h2 class="section-title">AI-Powered Rovers Exploring Other Worlds</h2>
+                <p class="section-description">
+                    AI helps rovers navigate treacherous terrain, analyze soil composition, and discover valuable resources on other planets autonomously.
+                </p>
+            </div>
+            <div class="rovers-content">
+                <div class="rover-info fade-in">
+                    <h3>🤖 How AI Powers Exploration Rovers</h3>
+                    <p>
+                        Space exploration rovers like NASA's Perseverance and Curiosity use advanced AI systems to navigate the Martian surface, avoid obstacles, and make real-time decisions without waiting for commands from Earth — which can take up to 24 minutes one way.
+                    </p>
+                    <p>
+                        AI-powered computer vision allows rovers to create 3D maps of their surroundings, identify scientifically interesting rock formations, and plan optimal driving paths. Machine learning algorithms analyze soil and rock samples to determine mineral composition and search for signs of ancient microbial life.
+                    </p>
+                    <p>
+                        The AutoNav system on Perseverance can drive up to 200 meters per day autonomously, processing images and making navigation decisions in real-time. This is a dramatic improvement over earlier rovers that required constant human supervision.
+                    </p>
+                    <ul class="capability-list">
+                        <li>
+                            <span class="check">✅</span>
+                            <span><strong>Autonomous Navigation (AutoNav):</strong> AI processes stereo camera images to detect hazards and plan safe paths at speeds up to 120 meters per hour.</span>
+                        </li>
+                        <li>
+                            <span class="check">✅</span>
+                            <span><strong>Soil & Rock Analysis:</strong> Machine learning classifies geological samples, identifying minerals and organic compounds using spectrometers like SHERLOC and PIXL.</span>
+                        </li>
+                        <li>
+                            <span class="check">✅</span>
+                            <span><strong>Resource Identification:</strong> AI detects water ice deposits, mineral resources, and potential landing sites for future human missions.</span>
+                        </li>
+                        <li>
+                            <span class="check">✅</span>
+                            <span><strong>Scientific Target Selection (AEGIS):</strong> The Autonomous Exploration for Gathering Increased Science system automatically identifies and prioritizes interesting targets for detailed study.</span>
+                        </li>
+                        <li>
+                            <span class="check">✅</span>
+                            <span><strong>Terrain Classification:</strong> Deep learning models classify terrain types to avoid soft sand traps and rocky areas that could damage the rover.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="rover-cards fade-in">
+                    <div class="rover-card">
+                        <div class="rover-card-header">
+                            <div class="rover-card-icon">🔴</div>
+                            <h4>Mars Perseverance Rover</h4>
+                        </div>
+                        <p>
+                            NASA's most advanced rover, launched in 2020, uses AI for autonomous driving, sample caching, and even flies the Ingenuity helicopter — the first powered flight on another planet. It carries 23 cameras and uses machine learning to identify biosignatures in Jezero Crater, an ancient lake bed.
+                        </p>
+                    </div>
+                    <div class="rover-card">
+                        <div class="rover-card-header">
+                            <div class="rover-card-icon">🟠</div>
+                            <h4>Curiosity Rover</h4>
+                        </div>
+                        <p>
+                            Operating since 2012, Curiosity pioneered AI-driven exploration on Mars. Its AEGIS system autonomously selects rock targets for its ChemCam laser, and its AI has analyzed over 800,000 laser shots on Martian rocks. Curiosity confirmed that Mars once had conditions suitable for microbial life.
+                        </p>
+                    </div>
+                    <div class="rover-card">
+                        <div class="rover-card-header">
+                            <div class="rover-card-icon">🟡</div>
+                            <h4>Zhurong Rover (China)</h4>
+                        </div>
+                        <p>
+                            China's first Mars rover, part of the Tianwen-1 mission, uses AI for autonomous navigation on Utopia Planitia. It employs ground-penetrating radar to study subsurface geology and has discovered evidence of ancient floods on Mars. Its AI systems operate independently due to signal delays.
+                        </p>
+                    </div>
+                    <div class="rover-card">
+                        <div class="rover-card-header">
+                            <div class="rover-card-icon">🔵</div>
+                            <h4>Chandrayaan-3 Pragyan Rover (India)</h4>
+                        </div>
+                        <p>
+                            ISRO's lunar rover successfully explored the Moon's south pole in 2023 — a historic first. Using AI-assisted navigation, Pragyan analyzed lunar soil with LIBS and APXS instruments, confirming the presence of sulfur, aluminum, calcium, iron, and other elements near the lunar south pole.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SATELLITE TECHNOLOGY SECTION -->
+    <section id="satellite">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-label">Satellite Technology</div>
+                <h2 class="section-title">AI-Enhanced Satellite Systems</h2>
+                <p class="section-description">
+                    AI processes vast amounts of satellite data, monitors Earth's environment, tracks space weather, and ensures safer space missions through intelligent orbital management.
+                </p>
+            </div>
+            <div class="satellite-grid">
+                <div class="satellite-card fade-in">
+                    <div class="satellite-icon">🌍</div>
+                    <h3>Earth Observation</h3>
+                    <p>
+                        AI analyzes satellite imagery to monitor deforestation, track urban growth, detect natural disasters in real-time, and measure crop health. Deep learning processes images from Sentinel, Landsat, and commercial satellite constellations, providing actionable insights for climate science, agriculture, and disaster response.
+                    </p>
+                    <span class="stat-highlight">📡 2,800+ Earth observation satellites active</span>
+                </div>
+                <div class="satellite-card fade-in">
+                    <div class="satellite-icon">☀️</div>
+                    <h3>Space Weather Monitoring</h3>
+                    <p>
+                        AI predicts solar flares, coronal mass ejections, and geomagnetic storms that can damage satellites, disrupt GPS, and threaten astronaut safety. Machine learning models analyze solar data from SOHO and SDO satellites, providing early warnings up to 48 hours before dangerous space weather events reach Earth.
+                    </p>
+                    <span class="stat-highlight">⚡ 93% prediction accuracy achieved</span>
+                </div>
+                <div class="satellite-card fade-in">
+                    <div class="satellite-icon">🛰️</div>
+                    <h3>Orbital Management</h3>
+                    <p>
+                        AI manages satellite constellations, optimizes orbital paths, and prevents collisions with space debris. With over 30,000 tracked debris objects and millions of smaller fragments, AI systems calculate collision probabilities and autonomously execute avoidance maneuvers, protecting billions of dollars in space infrastructure.
+                    </p>
+                    <span class="stat-highlight">🛡️ 30,000+ debris objects tracked by AI</span>
+                </div>
+                <div class="satellite-card fade-in">
+                    <div class="satellite-icon">📡</div>
+                    <h3>Communication Networks</h3>
+                    <p>
+                        AI optimizes satellite communication bandwidth, routes signals efficiently through mega-constellations like Starlink (5,000+ satellites), and reduces latency for deep space communications. AI-driven beam forming and frequency allocation ensure global internet coverage and reliable data transmission from interplanetary missions.
+                    </p>
+                    <span class="stat-highlight">🌐 5,000+ Starlink satellites in orbit</span>
+                </div>
+                <div class="satellite-card fade-in">
+                    <div class="satellite-icon">🔬</div>
+                    <h3>Scientific Data Processing</h3>
+                    <p>
+                        AI processes petabytes of data from space telescopes like Hubble, James Webb, and Kepler. Machine learning algorithms have discovered thousands of exoplanets, classified millions of galaxies, detected gravitational wave events, and identified patterns in cosmic microwave background radiation.
+                    </p>
+                    <span class="stat-highlight">🌟 5,500+ exoplanets discovered with AI help</span>
+                </div>
+                <div class="satellite-card fade-in">
+                    <div class="satellite-icon">🗺️</div>
+                    <h3>Planetary Mapping</h3>
+                    <p>
+                        AI creates detailed 3D maps of planetary surfaces from orbital satellite data. Mars Reconnaissance Orbiter's HiRISE camera, combined with AI processing, has mapped Mars at 25cm resolution. AI identifies potential landing sites, water ice deposits, and geological features for future exploration missions.
+                    </p>
+                    <span class="stat-highlight">🗺️ 99.9% of Mars surface mapped</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MISSION CONTROL SECTION -->
+    <section id="mission">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-label">Mission Control</div>
+                <h2 class="section-title">AI-Powered Mission Operations</h2>
+                <p class="section-description">
+                    AI predicts risks, optimizes resources, monitors spacecraft health, and supports astronauts during complex space missions — making every mission safer and more efficient.
+                </p>
+            </div>
+            <div class="mission-layout">
+                <div class="mission-dashboard fade-in">
+                    <div class="dashboard-header">
+                        <h4>🖥️ AI Mission Dashboard</h4>
+                        <div class="status-indicator">
+                            <span class="status-dot"></span>
+                            Systems Nominal
+                        </div>
+                    </div>
+                    <div class="dashboard-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value cyan">99.7%</div>
+                            <div class="metric-label">System Uptime</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value green">847</div>
+                            <div class="metric-label">Active Sensors</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value orange">2.4 TB</div>
+                            <div class="metric-label">Data / Day</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value purple">156</div>
+                            <div class="metric-label">AI Predictions / Hr</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mission-info fade-in">
+                    <h3>How AI Runs Mission Control</h3>
+                    <p>
+                        Modern mission control centers use AI to monitor thousands of telemetry channels simultaneously, predict equipment failures days before they occur, and optimize mission timelines in real-time. AI reduces the cognitive load on flight controllers and enables faster, more accurate decision-making during critical mission phases.
+                    </p>
+                    <p>
+                        NASA's Jet Propulsion Laboratory (JPL) uses AI systems that can analyze spacecraft health data, schedule science observations, manage power and thermal resources, and even diagnose anomalies autonomously — crucial for deep space missions where communication delays make real-time human control impossible.
+                    </p>
+                    <div class="mission-capabilities">
+                        <div class="mission-cap-item">
+                            <span class="cap-icon">⚠️</span>
+                            <div class="cap-text">
+                                <h5>Predictive Risk Assessment</h5>
+                                <p>AI analyzes historical mission data to predict and prevent potential failures before they happen.</p>
+                            </div>
+                        </div>
+                        <div class="mission-cap-item">
+                            <span class="cap-icon">⚡</span>
+                            <div class="cap-text">
+                                <h5>Resource Optimization</h5>
+                                <p>AI manages power, fuel, bandwidth, and time resources to maximize mission science output.</p>
+                            </div>
+                        </div>
+                        <div class="mission-cap-item">
+                            <span class="cap-icon">👨‍🚀</span>
+                            <div class="cap-text">
+                                <h5>Astronaut Support (CIMON)</h5>
+                                <p>AI assistants like CIMON-2 help astronauts on the ISS with experiments, procedures, and emotional support.</p>
+                            </div>
+                        </div>
+                        <div class="mission-cap-item">
+                            <span class="cap-icon">🔧</span>
+                            <div class="cap-text">
+                                <h5>Autonomous Fault Detection</h5>
+                                <p>AI monitors 40,000+ parameters in real-time and can autonomously respond to spacecraft anomalies.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FUTURE EXPLORATION SECTION -->
+    <section id="future">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-label">Future Exploration</div>
+                <h2 class="section-title">The AI-Powered Future of Space</h2>
+                <p class="section-description">
+                    AI will help humanity discover new planets, search for extraterrestrial life, build sustainable space habitats, and eventually become a multi-planetary species.
+                </p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-year">2025–2027</span>
+                        <h4>🌙 Artemis Lunar AI Systems</h4>
+                        <p>
+                            NASA's Artemis program will deploy AI-powered systems on the lunar surface, including autonomous construction robots, AI-driven resource extraction (ISRU) for water ice mining at the South Pole, and intelligent habitat management systems for the Lunar Gateway station.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-year">2028–2030</span>
+                        <h4>🔴 AI-Driven Mars Preparation</h4>
+                        <p>
+                            Advanced AI systems will pre-position and prepare Mars habitats before human arrival. AI rovers will scout landing sites, test ISRU systems for oxygen and water production, build radiation shelters, and establish communication networks — all autonomously.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-year">2030–2035</span>
+                        <h4>🔭 Exoplanet Characterization</h4>
+                        <p>
+                            AI will analyze data from next-generation space telescopes (Habitable Worlds Observatory) to characterize exoplanet atmospheres, detect biosignatures like oxygen, methane, and water vapor, and identify the most promising candidates for harboring life.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-year">2035–2040</span>
+                        <h4>🏗️ Autonomous Space Construction</h4>
+                        <p>
+                            AI-controlled robotic systems will construct large space structures — orbital stations, solar power satellites, and deep space habitats — using resources mined from asteroids and the Moon. AI will manage entire supply chains in space with minimal human oversight.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-year">2040–2050</span>
+                        <h4>🌌 Interstellar Probe Intelligence</h4>
+                        <p>
+                            AI-powered interstellar probes (like Breakthrough Starshot concepts) will travel to nearby star systems at 20% the speed of light. These probes must be fully autonomous, using AI to navigate, make scientific observations, compress data, and beam findings back to Earth across light-years of distance.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-year">2050+</span>
+                        <h4>🧬 Search for Extraterrestrial Life</h4>
+                        <p>
+                            AI will lead the search for life beyond Earth — analyzing subsurface ocean data from Europa and Enceladus missions, processing SETI radio signals with machine learning, and even designing experiments to detect alien biochemistry that may be fundamentally different from life on Earth.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECHNOLOGIES SECTION -->
+    <section id="technologies">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-label">Core Technologies</div>
+                <h2 class="section-title">AI Technologies Powering Space</h2>
+                <p class="section-description">
+                    From machine learning to computer vision, explore the key AI technologies that make modern space exploration possible.
+                </p>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-card fade-in">
+                    <span class="tech-emoji">🧠</span>
+                    <h4>Machine Learning</h4>
+                    <p>Deep neural networks classify celestial objects, predict system failures, discover exoplanets in telescope data, and optimize spacecraft trajectories using reinforcement learning.</p>
+                </div>
+                <div class="tech-card fade-in">
+                    <span class="tech-emoji">👁️</span>
+                    <h4>Computer Vision</h4>
+                    <p>Advanced image processing enables rovers to navigate autonomously, satellites to detect changes on Earth's surface, and telescopes to identify faint astronomical objects.</p>
+                </div>
+                <div class="tech-card fade-in">
+                    <span class="tech-emoji">🗣️</span>
+                    <h4>Natural Language Processing</h4>
+                    <p>NLP powers astronaut voice assistants, processes mission reports, enables natural communication with AI systems like CIMON, and helps search vast scientific literature databases.</p>
+                </div>
+                <div class="tech-card fade-in">
+                    <span class="tech-emoji">🦾</span>
+                    <h4>Robotics & Automation</h4>
+                    <p>AI-driven robotic arms, autonomous docking systems, self-repairing mechanisms, and construction robots work tirelessly in the harsh vacuum of space.</p>
+                </div>
+                <div class="tech-card fade-in">
+                    <span class="tech-emoji">📈</span>
+                    <h4>Predictive Analytics</h4>
+                    <p>AI predicts equipment failures, weather patterns, orbital decay, space debris collision risks, and optimal launch windows using historical and real-time data analysis.</p>
+                </div>
+                <div class="tech-card fade-in">
+                    <span class="tech-emoji">🎯</span>
+                    <h4>Reinforcement Learning</h4>
+                    <p>AI agents learn optimal strategies for spacecraft maneuvers, fuel-efficient trajectories, rover path planning, and resource management through trial-and-error simulations.</p>
+                </div>
+                <div class="tech-card fade-in">
+                    <span class="tech-emoji">🔗</span>
+                    <h4>Edge Computing</h4>
+                    <p>On-board AI processors enable real-time data analysis and decision making without relying on Earth communication — critical for deep space missions with long signal delays.</p>
+                </div>
+                <div class="tech-card fade-in">
+                    <span class="tech-emoji">🧬</span>
+                    <h4>Generative AI</h4>
+                    <p>AI generates mission plans, designs spacecraft components, creates synthetic training data for space scenarios, and simulates extraterrestrial environments for mission preparation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KEY MISSIONS SECTION -->
+    <section id="missions">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-label">Key Missions</div>
+                <h2 class="section-title">Landmark AI-Powered Space Missions</h2>
+                <p class="section-description">
+                    These groundbreaking missions showcase how AI is transforming our understanding of the universe.
+                </p>
+            </div>
+            <div class="missions-grid">
+                <div class="mission-card fade-in">
+                    <div class="card-glow"></div>
+                    <div class="mission-icon">🔭</div>
+                    <h4>James Webb Space Telescope</h4>
+                    <div class="mission-org">NASA / ESA / CSA</div>
+                    <p>AI algorithms process JWST's unprecedented infrared images to discover the earliest galaxies, analyze exoplanet atmospheres for biosignatures, and study star formation in detail never before possible. ML models handle the complex data calibration and image processing pipeline.</p>
+                </div>
+                <div class="mission-card fade-in">
+                    <div class="card-glow"></div>
+                    <div class="mission-icon">🚁</div>
+                    <h4>Ingenuity Mars Helicopter</h4>
+                    <div class="mission-org">NASA / JPL</div>
+                    <p>The first aircraft to fly on another planet uses AI for autonomous flight control in Mars' thin atmosphere (1% of Earth's). Its navigation camera and AI system process terrain images at 30fps to maintain stable flight, having completed 72 flights — far exceeding its planned 5.</p>
+                </div>
+                <div class="mission-card fade-in">
+                    <div class="card-glow"></div>
+                    <div class="mission-icon">☄️</div>
+                    <h4>DART Mission</h4>
+                    <div class="mission-org">NASA</div>
+                    <p>The Double Asteroid Redirection Test used AI-powered autonomous navigation (SMART Nav) to guide the spacecraft to a precise impact with asteroid Dimorphos at 22,530 km/h. The AI system identified and tracked the target autonomously in the final 4 hours, successfully altering the asteroid's orbit.</p>
+                </div>
+                <div class="mission-card fade-in">
+                    <div class="card-glow"></div>
+                    <div class="mission-icon">🌙</div>
+                    <h4>Chandrayaan-3</h4>
+                    <div class="mission-org">ISRO (India)</div>
+                    <p>India's historic lunar mission used AI for hazard detection during landing, autonomous surface navigation of the Pragyan rover, and intelligent data analysis. It became the first mission to land near the lunar south pole, analyzing soil composition using AI-assisted spectroscopy instruments.</p>
+                </div>
+                <div class="mission-card fade-in">
+                    <div class="card-glow"></div>
+                    <div class="mission-icon">🛸</div>
+                    <h4>CIMON-2 (ISS)</h4>
+                    <div class="mission-org">ESA / Airbus / IBM</div>
+                    <p>The Crew Interactive MObile companioN is an AI-powered astronaut assistant aboard the ISS. Using IBM Watson, CIMON-2 helps astronauts with experiments, displays procedures, provides emotional support through sentiment analysis, and can navigate the station autonomously using fans and ultrasonic sensors.</p>
+                </div>
+                <div class="mission-card fade-in">
+                    <div class="card-glow"></div>
+                    <div class="mission-icon">⭐</div>
+                    <h4>Kepler / TESS Exoplanet Hunters</h4>
+                    <div class="mission-org">NASA</div>
+                    <p>AI and machine learning have been instrumental in discovering exoplanets from Kepler and TESS data. Google's deep learning algorithm found two new planets that human analysis missed. AI has helped confirm over 5,500 exoplanets by analyzing tiny brightness dips in stellar light curves.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHALLENGES SECTION -->
+    <section id="challenges">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-label">Challenges</div>
+                <h2 class="section-title">Challenges of AI in Space</h2>
+                <p class="section-description">
+                    While AI offers tremendous benefits, deploying it in the harsh environment of space presents unique and significant challenges.
+                </p>
+            </div>
+            <div class="challenges-grid">
+                <div class="challenge-card fade-in">
+                    <div class="challenge-number">01</div>
+                    <div class="challenge-info">
+                        <h4>Radiation Hardening</h4>
+                        <p>Space radiation (cosmic rays, solar particles) can flip bits in computer memory, causing AI systems to malfunction. Processors must be radiation-hardened, which often means using older, slower technology. Developing radiation-tolerant AI chips that maintain high performance is a major engineering challenge.</p>
+                    </div>
+                </div>
+                <div class="challenge-card fade-in">
+                    <div class="challenge-number">02</div>
+                    <div class="challenge-info">
+                        <h4>Communication Delays</h4>
+                        <p>Signals take 4-24 minutes to reach Mars and hours to reach outer planets. AI systems must make critical decisions autonomously without human guidance. This requires extremely reliable AI that can handle unexpected situations — a challenge since most AI training occurs in controlled Earth environments.</p>
+                    </div>
+                </div>
+                <div class="challenge-card fade-in">
+                    <div class="challenge-number">03</div>
+                    <div class="challenge-info">
+                        <h4>Limited Computing Power</h4>
+                        <p>Space-rated processors are generations behind commercial hardware due to radiation hardening requirements. Running complex deep learning models on these limited systems requires innovative optimization — model compression, pruning, quantization, and edge AI techniques that maintain accuracy with minimal computation.</p>
+                    </div>
+                </div>
+                <div class="challenge-card fade-in">
+                    <div class="challenge-number">04</div>
+                    <div class="challenge-info">
+                        <h4>Data Scarcity & Distribution Shift</h4>
+                        <p>AI models trained on Earth data may not generalize well to alien environments. Mars terrain, lunar dust behavior, and space conditions differ dramatically from training data. Collecting labeled training data from other planets is extremely expensive and limited, making robust generalization crucial.</p>
+                    </div>
+                </div>
+                <div class="challenge-card fade-in">
+                    <div class="challenge-number">05</div>
+                    <div class="challenge-info">
+                        <h4>Power & Thermal Constraints</h4>
+                        <p>Space AI systems must operate within strict power budgets (often just watts) and extreme temperature ranges (-150°C to +120°C). Efficient AI algorithms that minimize power consumption while maintaining performance are essential, as every watt used by AI is a watt not available for science instruments.</p>
+                    </div>
+                </div>
+                <div class="challenge-card fade-in">
+                    <div class="challenge-number">06</div>
+                    <div class="challenge-info">
+                        <h4>Verification & Trust</h4>
+                        <p>How do you verify an AI system will behave correctly in a situation it's never encountered — potentially billions of miles from Earth? Building trustworthy, explainable AI for space applications requires rigorous testing, formal verification methods, and extensive simulation before deployment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUOTE SECTION -->
+    <div class="quote-section">
+        <div class="quote-text fade-in">
+            "Because the next big discovery might be powered by AI."
+        </div>
+        <p class="quote-author fade-in">— The Future of Space Exploration</p>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <span>🚀</span>
+                    <span>AI Space Explorer</span>
+                </div>
+                <p>
+                    Exploring the intersection of Artificial Intelligence and Space Technology. A comprehensive resource for understanding how AI is revolutionizing our journey to the stars.
+                </p>
+                <p style="margin-top: 15px; font-size: 13px; color: var(--neon-cyan);">
+                    College Project — 2025
+                </p>
+            </div>
+            <div class="footer-section">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="#about">About AI in Space</a></li>
+                    <li><a href="#rovers">Exploration Rovers</a></li>
+                    <li><a href="#satellite">Satellite Technology</a></li>
+                    <li><a href="#mission">Mission Control</a></li>
+                    <li><a href="#future">Future Exploration</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#technologies">AI Technologies</a></li>
+                    <li><a href="#missions">Key Missions</a></li>
+                    <li><a href="#challenges">Challenges</a></li>
+                    <li><a href="#">Research Papers</a></li>
+                    <li><a href="#">NASA AI Projects</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Space Agencies</h4>
+                <ul>
+                    <li><a href="https://www.nasa.gov" target="_blank">NASA</a></li>
+                    <li><a href="https://www.esa.int" target="_blank">ESA</a></li>
+                    <li><a href="https://www.isro.gov.in" target="_blank">ISRO</a></li>
+                    <li><a href="https://www.spacex.com" target="_blank">SpaceX</a></li>
+                    <li><a href="https://www.jaxa.jp/english" target="_blank">JAXA</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 AI Space Explorer | College Project | All information for educational purposes</p>
+            <div class="social-links">
+                <a href="#" class="social-link" title="GitHub">💻</a>
+                <a href="#" class="social-link" title="LinkedIn">💼</a>
+                <a href="#" class="social-link" title="Email">📧</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCROLL TO TOP -->
+    <button class="scroll-top" id="scrollTop" title="Scroll to top">↑</button>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // ===== GENERATE STARS =====
+        function generateStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 200;
+            
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', (Math.random() * 4 + 2) + 's');
+                star.style.animationDelay = Math.random() * 4 + 's';
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        generateStars();
+
+        // ===== MOBILE NAVIGATION =====
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile nav when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // ===== NAVBAR SCROLL EFFECT =====
+        const navbar = document.getElementById('navbar');
+        const scrollTopBtn = document.getElementById('scrollTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Scroll to top button
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+
+            // Active nav link
+            const sections = document.querySelectorAll('section[id]');
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ===== SCROLL ANIMATIONS =====
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 70;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ===== TYPING EFFECT FOR STATS (Optional Enhancement) =====
+        function animateValue(element, start, end, duration, suffix = '') {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value + suffix;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // ===== PARALLAX EFFECT ON HERO =====
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const hero = document.querySelector('.hero-content');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+                hero.style.opacity = 1 - (scrolled / window.innerHeight);
+            }
+        });
+
+        // ===== CONSOLE EASTER EGG =====
+        console.log('%c🚀 AI Space Explorer', 'font-size: 24px; font-weight: bold; color: #00f5ff;');
+        console.log('%cExploring the cosmos with artificial intelligence!', 'font-size: 14px; color: #94a3b8;');
+    </script>
+</body>
+</html>
